@@ -1,13 +1,9 @@
 # vim:ft=yaml
 
 - hosts: all
-  #gather_facts: False
   become: true
 
   tasks:
-    - name: install python 2
-      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-
     - name: Import InfluxDB GPG signing key
       apt_key: url=https://repos.influxdata.com/influxdb.key state=present
 
@@ -23,6 +19,12 @@
         regexp: 'hostname = "localhost"'
         replace: 'hostname = "{{ ansible_hostname }}"'
         backup: yes
+      register: influx_conf
+
+    - name: Restart if reconfigured
+      service: name=influxdb state=restarted
+      when: influx_conf.changed
 
     - name: Start the InfluxDB service
-      service: name=influxdb state=restarted
+      service: name=influxdb state=started
+      when: not influx_conf.changed
