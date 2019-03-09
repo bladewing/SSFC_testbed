@@ -1,0 +1,9 @@
+# vim:ft=yaml
+
+- hosts: all
+  gather_facts: False
+  become: true
+
+  tasks:
+    - raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      changed_when: False

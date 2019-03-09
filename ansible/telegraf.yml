@@ -1,0 +1,32 @@
+# vim:ft=yaml
+
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Import InfluxDB GPG signing key
+      apt_key: url=https://repos.influxdata.com/influxdb.key state=present
+
+    - name: Add InfluxDB repository
+      apt_repository: repo='deb https://repos.influxdata.com/ubuntu bionic stable' state=present
+
+    - name: Install telegraf packages
+      apt: name=telegraf state=present
+
+    - name: Set telegraf output
+      ini_file:
+        path: /etc/telegraf/telegraf.conf
+        section: '[outputs.influxdb]'
+        option: urls
+        value: '["http://192.168.42.2:8086"]'
+      register: telegraf_conf
+
+    - name: Restart the telegraf service
+      service: name=telegraf state=restarted
+      when: telegraf_conf.changed
+
+    - name: Start the telegraf service
+      service: name=telegraf state=started
+      when: not telegraf_conf.changed
+
+
