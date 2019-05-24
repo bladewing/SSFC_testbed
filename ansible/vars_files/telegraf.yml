@@ -1,0 +1,20 @@
+influx_server: 192.168.42.2
+influx_port: 8086
+telegraf_agent_version: 1.10.4
+telegraf_agent_version_patch: 1
+telegraf_agent_output:
+  - type: influxdb
+    config:
+      - urls = ["http://{{ influx_server }}:{{ influx_port }}"]
+      - database = "telegraf"
+telegraf_plugins_default:
+  - plugin: cpu
+    config:
+      - percpu = true
+  - plugin: disk
+  - plugin: io
+  - plugin: mem
+  - plugin: system
+  - plugin: swap
+  - plugin: netstat
+  - plugin: temp
