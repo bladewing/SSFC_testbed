@@ -4,3 +4,6 @@
 [submodule "ansible/roles/influxdb"]
 	path = ansible/roles/influxdb
 	url = git@github.com:rossmcdonald/influxdb.git
+[submodule "ansible/roles/chronograf"]
+	path = ansible/roles/chronograf
+	url = git@github.com:influxdata/ansible-chronograf.git

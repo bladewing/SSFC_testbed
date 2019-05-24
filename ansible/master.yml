@@ -9,3 +9,4 @@
     - role: influxdb
 #      influxdb_bind_hostname: "{{ ansible_hostname }}"
     - role: telegraf
+    - role: chronograf
