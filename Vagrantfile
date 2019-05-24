@@ -6,8 +6,7 @@ Vagrant.configure("2") do |config|
     master.vm.network "private_network", ip: "192.168.42.2", virtualbox__intnet: "management"
     master.vm.network "forwarded_port", guest: 8888, host: 8888
     playbooks = ['bootstrap',
-                 'influxdb',
-                 'telegraf']
+                 'master']
     playbooks.each do |playbook|
       master.vm.provision "#{playbook}", type: "ansible" do |ansible|
         ansible.playbook = "ansible/#{playbook}.yml"

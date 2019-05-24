@@ -1,3 +1,6 @@
 [submodule "ansible/roles/telegraf"]
 	path = ansible/roles/telegraf
 	url = git@github.com:dj-wasabi/ansible-telegraf.git
+[submodule "ansible/roles/influxdb"]
+	path = ansible/roles/influxdb
+	url = git@github.com:rossmcdonald/influxdb.git
