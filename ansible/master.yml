@@ -1,9 +1,15 @@
 # vim:ft=yaml
 
 - hosts: all
+  gather_facts: False
   become: true
   vars_files:
     - vars_files/telegraf.yml
+
+
+  pre_tasks:
+    - name: Bootstrap
+      include_tasks: bootstrap.yml
 
   roles:
     - role: influxdb
