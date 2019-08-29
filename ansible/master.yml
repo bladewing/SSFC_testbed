@@ -3,16 +3,47 @@
 - hosts: all
   gather_facts: False
   become: true
-  vars_files:
-    - vars_files/telegraf.yml
-
 
   pre_tasks:
     - name: Bootstrap
-      include_tasks: bootstrap.yml
+      include_tasks: subtasks/bootstrap.yml
 
-  roles:
-    - role: influxdb
-#      influxdb_bind_hostname: "{{ ansible_hostname }}"
-    - role: telegraf
-    - role: chronograf
+  tasks:
+    - name: add influxDB apt repo
+      include_tasks: subtasks/influx_repo.yml
+
+    - name: setup telegraf
+      include_tasks: subtasks/telegraf_setup.yml
+
+    - name: install influx server
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      with_items:
+        - influxdb
+        - chronograf
+
+    - name: Set telegraf output adress
+      ini_file:
+        path: /etc/influxdb/influxdb.conf
+        section: 'http'
+        option: bind-address
+        value: '"192.168.42.2:8086"'
+      register: influx_conf
+
+
+    - name: setup services
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      with_items:
+        - influxdb
+        - chronograf
+
+    - name: restart influx if reconfigured
+      service:
+        name: influxdb
+        state: restarted
+      when: influx_conf.changed
