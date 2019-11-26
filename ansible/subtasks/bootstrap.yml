@@ -1,11 +1,11 @@
 # vim:ft=yaml
 
-- name: Ensuring Python 2 is installed
-  raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-  changed_when: False
-
-- name: gather facts
-  setup:
+#- name: Ensuring Python 2 is installed
+#  raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+#  changed_when: False
+#
+#- name: gather facts
+#  setup:
 
 - name: install aptitude
   apt:

@@ -1,0 +1,41 @@
+# vim: set ft=yaml:
+all:
+  children:
+    masters:
+      hosts:
+        master:
+          ansible_host: 192.168.42.2
+          ansible_user: vagrant
+          ansible_private_key_file: /vagrant/.vagrant/machines/master/virtualbox/private_key
+    meta_hosts:
+      hosts:
+        clientHost:
+          ansible_host: 192.168.42.2
+          ansible_user: vagrant
+          ansible_private_key_file: /vagrant/.vagrant/machines/clientHost/virtualbox/private_key
+    security_appliances:
+      hosts:
+        sa1:
+          ansible_host: 192.168.42.50
+          ansible_user: vagrant
+          ansible_private_key_file: /vagrant/.vagrant/machines/sa1/virtualbox/private_key
+        sa2:
+          ansible_host: 192.168.42.51
+          ansible_user: vagrant
+          ansible_private_key_file: /vagrant/.vagrant/machines/sa2/virtualbox/private_key
+        sa3:
+          ansible_host: 192.168.42.52
+          ansible_user: vagrant
+          ansible_private_key_file: /vagrant/.vagrant/machines/sa3/virtualbox/private_key
+    servers:
+      hosts:
+        server:
+          ansible_host: 192.168.42.60
+          ansible_user: vagrant
+          ansible_private_key_file: /vagrant/.vagrant/machines/server/virtualbox/private_key
+    switches:
+      hosts:
+        switch:
+          ansible_host: 192.168.42.3
+          ansible_user: vagrant
+          ansible_private_key_file: /vagrant/.vagrant/machines/switch/virtualbox/private_key

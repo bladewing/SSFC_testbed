@@ -14,3 +14,24 @@
 
     - name: setup telegraf
       include_tasks: subtasks/telegraf_setup.yml
+
+    - name: install OVS
+      apt:
+        name: openvswitch-switch
+        state: present
+        update_cache: yes
+
+    - name: setup bridge
+      openvswitch_bridge:
+        bridge: br0
+
+    - name: setup bridge ports
+      openvswitch_port:
+        bridge: br0
+        port: "{{ item }}"
+        state: present
+      with_items:
+        - enp0s9
+        - enp0s10
+        - enp0s16
+        - enp0s17
