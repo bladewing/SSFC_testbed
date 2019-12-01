@@ -47,3 +47,6 @@
         name: influxdb
         state: restarted
       when: influx_conf.changed
+
+      #install pip
+      #install ryu
