@@ -1,6 +1,6 @@
-- name: add influx apt repository
-  apt_repository:
-    repo: 'deb http://192.168.42.2/influx bionic stable'
-    state: present
-    filename: influx
-    update_cache: yes
+#- name: add influx apt repository
+  #apt_repository:
+    #repo: 'deb http://192.168.42.2/influx bionic stable'
+    #state: present
+    #filename: influx
+    #update_cache: yes

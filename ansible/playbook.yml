@@ -58,111 +58,111 @@
         state: present
         update_cache: yes
 
-    - name: copy apt-mirror list
-      copy:
-        src: subtasks/apt-mirror/mirror.list
-        dest: /etc/apt/mirrors.list
-        mode: '0644'
-        owner: root
-        group: root
+    #- name: copy apt-mirror list
+      #copy:
+        #src: subtasks/apt-mirror/mirror.list
+        #dest: /etc/apt/mirrors.list
+        #mode: '0644'
+        #owner: root
+        #group: root
 
-    - name: sync apt-mirror
-      shell: apt-mirror
+    #- name: sync apt-mirror
+      #shell: apt-mirror
 
-    - name: symbolic link for ubuntu
-      file:
-        src: /var/spool/apt-mirror/mirror/archive.ubuntu.com/ubuntu/
-        dest: /var/www/html/ubuntu
-        owner: www-data
-        group: www-data
-        state: link
+    #- name: symbolic link for ubuntu
+      #file:
+        #src: /var/spool/apt-mirror/mirror/archive.ubuntu.com/ubuntu/
+        #dest: /var/www/html/ubuntu
+        #owner: www-data
+        #group: www-data
+        #state: link
 
-    - name: symbolic link for influx
-      file:
-        src: /var/spool/apt-mirror/mirror/repos.influxdata.com/ubuntu/
-        dest: /var/www/html/influx
-        owner: www-data
-        group: www-data
-        state: link
+    #- name: symbolic link for influx
+      #file:
+        #src: /var/spool/apt-mirror/mirror/repos.influxdata.com/ubuntu/
+        #dest: /var/www/html/influx
+        #owner: www-data
+        #group: www-data
+        #state: link
 
-    - name: run apache
-      service:
-        name: apache2
-        state: started
-        enabled: yes
+    #- name: run apache
+      #service:
+        #name: apache2
+        #state: started
+        #enabled: yes
 
-- name: setup apt-clients
-  gather_facts: False
-  hosts: all
-  become: true
+#- name: setup apt-clients
+  #gather_facts: False
+  #hosts: all
+  #become: true
 
-  tasks:
-    - name: remove default debs
-      apt_repository:
-        repo: "{{ item }}"
-        state: absent
-      with_items:
-        - deb http://de.archive.ubuntu.com/ubuntu bionic main restricted
-        - deb http://de.archive.ubuntu.com/ubuntu bionic-security main restricted
-        - deb http://de.archive.ubuntu.com/ubuntu bionic-updates restricted
-        - deb-src http://de.archive.ubuntu.com/ubuntu bionic main restricted
-        - deb-src http://de.archive.ubuntu.com/ubuntu bionic-security main restricted
-        - deb-src http://de.archive.ubuntu.com/ubuntu bionic-updates restricted
+  #tasks:
+    #- name: remove default debs
+      #apt_repository:
+        #repo: "{{ item }}"
+        #state: absent
+      #with_items:
+        #- deb http://de.archive.ubuntu.com/ubuntu bionic main restricted
+        #- deb http://de.archive.ubuntu.com/ubuntu bionic-security main restricted
+        #- deb http://de.archive.ubuntu.com/ubuntu bionic-updates restricted
+        #- deb-src http://de.archive.ubuntu.com/ubuntu bionic main restricted
+        #- deb-src http://de.archive.ubuntu.com/ubuntu bionic-security main restricted
+        #- deb-src http://de.archive.ubuntu.com/ubuntu bionic-updates restricted
 
-    - name: add new deps
-      apt_repository:
-        repo: "{{ item }}"
-        state: absent
-      with_items:
-        - deb http://192.168.42.2/ubuntu bionic main restricted
-        - deb http://192.168.42.2/ubuntu bionic-security main restricted
-        - deb http://192.168.42.2/ubuntu bionic-updates restricted
-        - deb-src http://192.168.42.2/ubuntu bionic main restricted
-        - deb-src http://192.168.42.2/ubuntu bionic-security main restricted
-        - deb-src http://192.168.42.2/ubuntu bionic-updates restricted
+    #- name: add new deps
+      #apt_repository:
+        #repo: "{{ item }}"
+        #state: absent
+      #with_items:
+        #- deb http://192.168.42.2/ubuntu bionic main restricted
+        #- deb http://192.168.42.2/ubuntu bionic-security main restricted
+        #- deb http://192.168.42.2/ubuntu bionic-updates restricted
+        #- deb-src http://192.168.42.2/ubuntu bionic main restricted
+        #- deb-src http://192.168.42.2/ubuntu bionic-security main restricted
+        #- deb-src http://192.168.42.2/ubuntu bionic-updates restricted
 
-- name: setup influxdb, chronograf @ master
-  gather_facts: False
-  hosts: masters
-  become: true
+#- name: setup influxdb, chronograf @ master
+  #gather_facts: False
+  #hosts: masters
+  #become: true
 
-  tasks:
-    - name: install influx server
-      apt:
-        name:
-          - influxdb
-          - chronograf
-        state: present
-        update_cache: yes
+  #tasks:
+    #- name: install influx server
+      #apt:
+        #name:
+          #- influxdb
+          #- chronograf
+        #state: present
+        #update_cache: yes
 
-    - name: Set telegraf output adress
-      ini_file:
-        path: /etc/influxdb/influxdb.conf
-        section: 'http'
-        option: bind-address
-        value: '"192.168.42.2:8086"'
-      register: influx_conf
+    #- name: Set telegraf output adress
+      #ini_file:
+        #path: /etc/influxdb/influxdb.conf
+        #section: 'http'
+        #option: bind-address
+        #value: '"192.168.42.2:8086"'
+      #register: influx_conf
 
-    - name: setup services
-      service:
-        name: "{{ item }}"
-        state: started
-        enabled: yes
-      with_items:
-        - influxdb
-        - chronograf
+    #- name: setup services
+      #service:
+        #name: "{{ item }}"
+        #state: started
+        #enabled: yes
+      #with_items:
+        #- influxdb
+        #- chronograf
 
-    - name: restart influx if reconfigured
-      service:
-        name: influxdb
-        state: restarted
-      when: influx_conf.changed
+    #- name: restart influx if reconfigured
+      #service:
+        #name: influxdb
+        #state: restarted
+      #when: influx_conf.changed
 
-- name: setup telegraf
-  hosts: all
-  gather_facts: False
-  become: true
+#- name: setup telegraf
+  #hosts: all
+  #gather_facts: False
+  #become: true
 
-  tasks:
-    - name: setup telegraf
-      include_tasks: subtasks/telegraf_setup.yml
+  #tasks:
+    #- name: setup telegraf
+      #include_tasks: subtasks/telegraf_setup.yml

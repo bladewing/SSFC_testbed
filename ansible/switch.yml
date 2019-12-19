@@ -9,11 +9,11 @@
       include_tasks: subtasks/bootstrap.yml
 
   tasks:
-    - name: add influxDB apt repo
-      include_tasks: subtasks/influx_repo.yml
+    #- name: add influxDB apt repo
+      #include_tasks: subtasks/influx_repo.yml
 
-    - name: setup telegraf
-      include_tasks: subtasks/telegraf_setup.yml
+    #- name: setup telegraf
+      #include_tasks: subtasks/telegraf_setup.yml
 
     - name: install OVS
       apt:
