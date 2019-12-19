@@ -95,15 +95,16 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "switch" do |switch|
-    nets = { 3 => "client_to_switch",
-             4 => "eve_to_switch",
-             5 => "sa1_to_switch",
-             6 => "sa1_fr_switch",
-             7 => "sa2_to_switch",
-             8 => "sa2_fr_switch",
-             9 => "sa3_to_switch",
-             10 => "sa3_fr_switch",
-             11 => "server_to_switch" }
+    nets = { 3 => "client_to_switch", # 12:34:56:78:90:10
+             4 => "eve_to_switch",    # 12:34:56:78:90:11
+             5 => "sa1_to_switch",    # 12:34:56:78:90:12
+             6 => "sa1_fr_switch",    # 12:34:56:78:90:13
+             7 => "sa2_to_switch",    # 12:34:56:78:90:14
+             8 => "sa2_fr_switch",    # 12:34:56:78:90:15
+             9 => "sa3_to_switch",    # 12:34:56:78:90:16
+             10 => "sa3_fr_switch",   # 12:34:56:78:90:17
+             11 => "server_to_switch" # 12:34:56:78:90:18
+            }
     switch.vm.box = "ubuntu/bionic64"
     switch.vm.hostname = "switch"
     switch.vm.provider "virtualbox" do |vb|
@@ -112,6 +113,7 @@ Vagrant.configure("2") do |config|
         vb.customize ["modifyvm", :id, "--nic#{nic}", "intnet"]
         vb.customize ["modifyvm", :id, "--intnet#{nic}", "#{net}"]
         vb.customize ["modifyvm", :id, "--cableconnected#{nic}", "on"]
+        vb.customize ["modifyvm", :id, "--macaddress#{nic}", "12345678901" + (nic-3).to_s]
       vb.customize ["modifyvm", :id, "--nicpromisc#{nic}", "allow-all"]
       end
     end
