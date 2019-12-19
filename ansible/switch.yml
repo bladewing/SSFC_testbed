@@ -35,3 +35,34 @@
         - enp0s10
         - enp0s16
         - enp0s17
+        - enp0s18
+        - enp0s19
+        - enp2s0
+        - enp2s1
+        - enp2s2
+
+    - name: bringing interfaces up
+      raw: ip link set "{{ item }}" up
+      with_items:
+        - enp0s9
+        - enp0s10
+        - enp0s16
+        - enp0s17
+        - enp0s18
+        - enp0s19
+        - enp2s0
+        - enp2s1
+        - enp2s2
+
+    - name: bringing interfaces up
+      raw: ip link set "{{ item }}" up
+      with_items:
+        - enp0s9
+        - enp0s10
+        - enp0s16
+        - enp0s17
+        - enp0s18
+        - enp0s19
+        - enp2s0
+        - enp2s1
+        - enp2s2
