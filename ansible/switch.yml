@@ -1,6 +1,6 @@
 # vim:ft=yaml
 
-- hosts: all
+- hosts: switches
   gather_facts: False
   become: true
 
