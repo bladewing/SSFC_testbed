@@ -4,3 +4,6 @@ sudo snort -c /etc/snort/snort.conf -Q -i enp0s9:enp0s10 --daq afpacket --daq-mo
 
 Starting ryu:
 ryu-manager ryu.app.ofctl_rest
+
+Add a flow from X to Y (on switch):
+sudo ovs-ofctl add-flow br0 in_port=X,actions=Y
