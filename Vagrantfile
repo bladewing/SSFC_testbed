@@ -95,15 +95,15 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "switch" do |switch|
-    nets = { 3 => "client_to_switch", # 12:34:56:78:90:10
-             4 => "eve_to_switch",    # 12:34:56:78:90:11
-             5 => "sa1_to_switch",    # 12:34:56:78:90:12
-             6 => "sa1_fr_switch",    # 12:34:56:78:90:13
-             7 => "sa2_to_switch",    # 12:34:56:78:90:14
-             8 => "sa2_fr_switch",    # 12:34:56:78:90:15
-             9 => "sa3_to_switch",    # 12:34:56:78:90:16
-             10 => "sa3_fr_switch",   # 12:34:56:78:90:17
-             11 => "server_to_switch" # 12:34:56:78:90:18
+    nets = { 3 => "client_to_switch", # 12:34:56:78:90:10 enp0s9
+             4 => "eve_to_switch",    # 12:34:56:78:90:11 enp0s10
+             5 => "sa1_to_switch",    # 12:34:56:78:90:12 enp0s16
+             6 => "sa1_fr_switch",    # 12:34:56:78:90:13 enp0s17
+             7 => "sa2_to_switch",    # 12:34:56:78:90:14 enp0s18
+             8 => "sa2_fr_switch",    # 12:34:56:78:90:15 enp0s19
+             9 => "sa3_to_switch",    # 12:34:56:78:90:16 enp2s0
+             10 => "sa3_fr_switch",   # 12:34:56:78:90:17 enp2s1
+             11 => "server_to_switch" # 12:34:56:78:90:18 enp2s2
             }
     switch.vm.box = "ubuntu/bionic64"
     switch.vm.hostname = "switch"
