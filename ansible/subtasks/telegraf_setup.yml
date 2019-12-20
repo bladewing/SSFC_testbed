@@ -1,33 +1,33 @@
-- name: install telegraf
-  apt:
-    name: telegraf
-    state: present
-    update_cache: yes
+#- name: install telegraf
+  #apt:
+    #name: telegraf
+    #state: present
+    #update_cache: yes
 
-- name: set telegraf interval to 1s
-  ini_file:
-    path: /etc/telegraf/telegraf.conf
-    section: agent
-    option: interval
-    value: '"1s"'
-  register: telegraf_conf
+#- name: set telegraf interval to 1s
+  #ini_file:
+    #path: /etc/telegraf/telegraf.conf
+    #section: agent
+    #option: interval
+    #value: '"1s"'
+  #register: telegraf_conf
 
-- name: Set telegraf output adress
-  ini_file:
-    path: /etc/telegraf/telegraf.conf
-    section: '[outputs.influxdb]'
-    option: urls
-    value: '["http://192.168.42.2:8086"]'
-  register: telegraf_conf
+#- name: Set telegraf output adress
+  #ini_file:
+    #path: /etc/telegraf/telegraf.conf
+    #section: '[outputs.influxdb]'
+    #option: urls
+    #value: '["http://192.168.42.2:8086"]'
+  #register: telegraf_conf
 
-- name: start telegraf
-  service:
-    name: telegraf
-    state: started
-    enabled: yes
+#- name: start telegraf
+  #service:
+    #name: telegraf
+    #state: started
+    #enabled: yes
 
-- name: restart telegraf
-  service:
-    name: telegraf
-    state: restarted
-  when: telegraf_conf.changed
+#- name: restart telegraf
+  #service:
+    #name: telegraf
+    #state: restarted
+  #when: telegraf_conf.changed
