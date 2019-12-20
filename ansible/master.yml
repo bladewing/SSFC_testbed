@@ -1,6 +1,6 @@
 # vim:ft=yaml
 
-- hosts: all
+- hosts: masters
   gather_facts: False
   become: true
 
@@ -47,3 +47,11 @@
         name: influxdb
         state: restarted
       when: influx_conf.changed
+
+    - name: install pip3
+      apt:
+        name: python3-pip
+
+    - name: install ryu
+      pip:
+        name: ryu

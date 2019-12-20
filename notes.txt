@@ -1,3 +1,6 @@
 Starting snort:
 
 sudo snort -c /etc/snort/snort.conf -Q -i enp0s9:enp0s10 --daq afpacket --daq-mode inline
+
+Starting ryu:
+ryu-manager ryu.app.ofctl_rest
