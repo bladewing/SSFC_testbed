@@ -1,6 +1,6 @@
 # vim:ft=yaml
 
-- hosts: all
+- hosts: servers
   gather_facts: False
   become: true
 
@@ -14,3 +14,7 @@
 
     - name: setup telegraf
       include_tasks: subtasks/telegraf_setup.yml
+
+    - name: install apache
+      apt:
+        name: apache2
