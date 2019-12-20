@@ -60,13 +60,8 @@ Vagrant.configure("2") do |config|
     sa2.vm.box = "ubuntu/bionic64"
     sa2.vm.hostname = "sa2"
     sa2.vm.network "private_network", ip: "192.168.204.1", netmask: "255.255.128.0", virtualbox__intnet: "management", mac: "9cb65490f990"
-<<<<<<< HEAD
     sa2.vm.network "private_network", ip: "0.0.0.0", netmask: "255.255.128.0", virtualbox__intnet: "sa2_to_switch", mac: "f4ce46fdec38"
     sa2.vm.network "private_network", ip: "0.0.0.0", netmask: "255.255.128.0", virtualbox__intnet: "sa2_fr_switch", mac: "f4ce46fdec39"
-=======
-    sa2.vm.network "private_network", ip: "192.168.4.2", netmask: "255.255.128.0", virtualbox__intnet: "sa2_to_switch", mac: "f4ce46fdec38"
-#     sa2.vm.network "private_network", ip: "192.168.4.3", netmask: "255.255.128.0", virtualbox__intnet: "sa2_fr_switch", mac: "f4ce46fdec39"
->>>>>>> Comment out some stuff
     sa2.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
       vb.customize ["modifyvm", :id, "--nicpromisc4", "allow-all"]
