@@ -1,0 +1,52 @@
+# vim:ft=yaml
+
+- hosts: sa2
+  gather_facts: False
+  become: true
+
+  pre_tasks:
+    - name: Bootstrap
+      include_tasks: subtasks/bootstrap.yml
+
+  tasks:
+    - name: add influxDB apt repo
+      include_tasks: subtasks/influx_repo.yml
+
+    - name: setup telegraf
+      include_tasks: subtasks/telegraf_setup.yml
+
+    #arch wiki ftw https://wiki.archlinux.org/index.php/Network_bridge
+    - name: make interfaces promisc
+      raw: ip link set {{ item }} promisc on
+      with_items:
+        - enp0s9
+        - enp0s10
+
+    - name: create bridge
+      raw: ip link add name br0 type bridge
+
+    - name: set bridge up
+      raw: ip link set br0 up
+
+    - name: add interfaces to bridge
+      raw: ip link set {{ item }} master br0
+      with_items:
+        - enp0s9
+        - enp0s10
+
+    - name: Load br_netfilter kernel module
+      modprobe:
+        name: br_netfilter
+        state: present
+
+    #sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+    #sudo ip addr del 10.0.0.1/17 dev enp0s9
+    #sudo ip addr del 10.0.128.1/17 dev enp0s10
+    #sudo ip link set enp0s9 promisc on
+    #sudo ip link set enp0s10 promisc on
+    #ip link add name br0 type bridge
+    #ip link set br0 up
+    #ip link set enp0s9 master br0
+    #ip link set enp0s10 master br0
+    #sudo modprobe br_netfilter
+    #TEST sudo iptables -A FORWARD -p icmp -j DROP

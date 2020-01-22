@@ -1,6 +1,6 @@
 # vim:ft=yaml
 
-- hosts: all
+- hosts: sa1
   gather_facts: False
   become: true
 
@@ -15,6 +15,13 @@
     - name: setup telegraf
       include_tasks: subtasks/telegraf_setup.yml
 
-    - name: install snort
-      apt:
-        name: snort
+    #FIXME fails to install non-interactively
+    #- name: install snort
+      #apt:
+        #name: snort
+
+    - name: make interfaces promisc
+      raw: ip link set "{{ item }}" promisc on
+      with_items:
+        - enp0s9
+        - enp0s10
