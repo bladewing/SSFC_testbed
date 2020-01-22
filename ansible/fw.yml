@@ -16,6 +16,9 @@
       include_tasks: subtasks/telegraf_setup.yml
 
     #arch wiki ftw https://wiki.archlinux.org/index.php/Network_bridge
+    - name: Enable ip forwarding
+      raw: sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
     - name: make interfaces promisc
       raw: ip link set {{ item }} promisc on
       with_items:
@@ -40,8 +43,8 @@
         state: present
 
     #sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
-    #sudo ip addr del 10.0.0.1/17 dev enp0s9
-    #sudo ip addr del 10.0.128.1/17 dev enp0s10
+    #sudo ip addr del 10.0.0.1/17 dev enp0s9 // not needed?
+    #sudo ip addr del 10.0.128.1/17 dev enp0s10 // "
     #sudo ip link set enp0s9 promisc on
     #sudo ip link set enp0s10 promisc on
     #ip link add name br0 type bridge
