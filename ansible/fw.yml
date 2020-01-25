@@ -15,6 +15,22 @@
     - name: setup telegraf
       include_tasks: subtasks/telegraf_setup.yml
 
+    - name: install packages
+      apt:
+        pkg:
+          - ruby
+          - rsyslog
+
+    - name: install filewatcher
+      gem:
+        name: filewatcher
+        state: present
+
+    - name: install concurrent-ruby
+      gem:
+        name: concurrent-ruby
+        state: present
+
     #arch wiki ftw https://wiki.archlinux.org/index.php/Network_bridge
     - name: Enable ip forwarding
       raw: sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
@@ -42,14 +58,22 @@
         name: br_netfilter
         state: present
 
-    #sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
-    #sudo ip addr del 10.0.0.1/17 dev enp0s9 // not needed?
-    #sudo ip addr del 10.0.128.1/17 dev enp0s10 // "
-    #sudo ip link set enp0s9 promisc on
-    #sudo ip link set enp0s10 promisc on
-    #ip link add name br0 type bridge
-    #ip link set br0 up
-    #ip link set enp0s9 master br0
-    #ip link set enp0s10 master br0
-    #sudo modprobe br_netfilter
-    #TEST sudo iptables -A FORWARD -p icmp -j DROP
+
+    - name: Install pip3
+      apt:
+        name: python3-pip
+        state: present
+
+    - name: install pip packages
+      pip:
+        name:
+          - flask
+          - requests
+          - netifaces
+          - PyJWT
+
+
+
+    # git clone https://gitlab2.informatik.uni-wuerzburg.de/descartes/nfv-security/FireGuardian
+    # cd FireGuardian
+    # sudo ruby firewall.rb

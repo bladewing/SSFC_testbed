@@ -7,3 +7,6 @@ ryu-manager ryu.app.ofctl_rest
 
 Add a flow from X to Y (on switch):
 sudo ovs-ofctl add-flow br0 in_port=X,actions=Y
+
+Example firewall rule:
+sudo iptables -A FORWARD -p icmp -j DROP
