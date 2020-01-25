@@ -7,6 +7,7 @@ Vagrant.configure("2") do |config|
     master.vm.network "private_network", ip: "192.168.206.1", netmask: "255.255.128.0", virtualbox__intnet: "management", mac: "9cb65490d900"
     master.vm.network "forwarded_port", guest: 8888, host: 8888
     master.vm.network "forwarded_port", guest: 8086, host: 8086
+    master.vm.network "forwarded_port", guest: 5000, host: 5000
       #playbook = 'master'
     #master.vm.provision "#{playbook}", type: "ansible" do |ansible|
     #  ansible.compatibility_mode = "2.0"
