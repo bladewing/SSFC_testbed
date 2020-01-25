@@ -54,4 +54,8 @@
 
     - name: install ryu
       pip:
-        name: ryu
+        name:
+          - ryu
+          - flask
+          - PyJWT
+          - numpy
