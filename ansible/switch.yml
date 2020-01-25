@@ -25,6 +25,9 @@
       openvswitch_bridge:
         bridge: br0
 
+    - name: remove default flow
+      raw: ovs-ofctl del-flows br0
+
     - name: setup bridge ports
       openvswitch_port:
         bridge: br0
