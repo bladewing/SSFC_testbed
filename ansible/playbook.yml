@@ -13,12 +13,13 @@
 
 - name: Copy git ssh key
   hosts: all
-  become: true
+  become: false
   tasks:
   - name: Copy private key
     copy:
       src: gitkey
       dest: .ssh/id_rsa
+      mode: 0600
   - name: Copy public key
     copy:
       src: gitkey.pub
