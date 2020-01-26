@@ -16,12 +16,31 @@
       include_tasks: subtasks/telegraf_setup.yml
 
     #FIXME fails to install non-interactively
-    #- name: install snort
-      #apt:
-        #name: snort
+    - name: install snort
+      ignore_errors: true
+      apt:
+        name: snort
 
     - name: make interfaces promisc
       raw: ip link set "{{ item }}" promisc on
       with_items:
         - enp0s9
         - enp0s10
+
+- name: Setup wrapper
+  hosts: sa1
+  gather_facts: False
+  become: false
+
+  tasks:
+    - name: clone repo
+      git:
+        repo: git@gitlab2.informatik.uni-wuerzburg.de:descartes/nfv-security/SecurityApplianceWrapper.git
+        dest: SecurityApplianceWrapper
+        accept_hostkey: yes
+
+    - name: copy config
+      copy:
+        src: idswrapper.ini
+        dest: wrapper.ini
+      # Start wrapper
