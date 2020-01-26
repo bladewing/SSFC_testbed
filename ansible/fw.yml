@@ -72,7 +72,7 @@
       git:
         repo: git@gitlab2.informatik.uni-wuerzburg.de:descartes/nfv-security/SecurityApplianceWrapper.git
         dest: SecurityApplianceWrapper
-        key_file: .ssh/id_rsa
+        accept_hostkey: yes
 
     - name: copy config
       copy:
@@ -90,7 +90,7 @@
       git:
         repo: git@gitlab2.informatik.uni-wuerzburg.de:descartes/nfv-security/FireGuardian.git
         dest: FireGuardian
-        key_file: .ssh/id_rsa
+        accept_hostkey: yes
 
     - name: install filewatcher
       gem:
