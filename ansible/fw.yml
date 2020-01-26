@@ -32,7 +32,7 @@
         - enp0s10
 
     - name: create bridge
-      raw: ip link add name br0 type bridge
+      raw: sh -c "ip link add name br0 type bridge | true"
 
     - name: set bridge up
       raw: ip link set br0 up
