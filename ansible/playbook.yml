@@ -11,6 +11,19 @@
     - name: add influxDB apt repo
       include_tasks: subtasks/influx_repo.yml
 
+- name: Copy git ssh key
+  hosts: all
+  become: true
+  tasks:
+  - name: Copy private key
+    copy:
+      src: gitkey
+      dest: .ssh/id_rsa
+  - name: Copy public key
+    copy:
+      src: gitkey.pub
+      dest: .ssh/id_rsa.pub
+
 - name: setup dhcp-server
   gather_facts: False
   hosts: masters
