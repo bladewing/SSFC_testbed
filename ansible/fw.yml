@@ -72,7 +72,23 @@
           - netifaces
           - PyJWT
 
+- name: Setup wrapper
+  hosts: sa2
+  gather_facts: False
+  become: false
 
+  tasks:
+    - name: clone repo
+      git:
+        repo: git@gitlab2.informatik.uni-wuerzburg.de:descartes/nfv-security/SecurityApplianceWrapper.git
+        dest: SecurityApplianceWrapper
+        key_file: .ssh/id_rsa
+    - name: copy config
+      copy:
+        src: firewallwrapper.ini
+        dest: wrapper.ini
+
+      # Start wrapper
 
     # git clone https://gitlab2.informatik.uni-wuerzburg.de/descartes/nfv-security/FireGuardian
     # cd FireGuardian
