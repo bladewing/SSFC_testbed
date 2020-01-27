@@ -44,3 +44,22 @@
         src: idswrapper.ini
         dest: wrapper.ini
       # Start wrapper
+
+- name: Setup snort parser
+  hosts: sa1
+  gather_facts: False
+  become: false
+
+  tasks:
+  - name: Copy snort helper
+    copy:
+      src: ids/snort.py
+      dest: snort.py
+
+  - name: Copy snort parser
+    copy:
+      src: ids/readsnort.py
+      dest: readsnort.py
+
+  # sudo python3 readsnort.py
+  # start snort
