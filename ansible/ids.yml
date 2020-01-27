@@ -41,7 +41,7 @@
 
     - name: copy config
       copy:
-        src: idswrapper.ini
+        src: ids/wrapper.ini
         dest: wrapper.ini
       # Start wrapper
 
