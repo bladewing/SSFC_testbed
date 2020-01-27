@@ -1,6 +1,11 @@
 Starting snort:
 
-sudo snort -c /etc/snort/snort.conf -Q -i enp0s9:enp0s10 --daq afpacket --daq-mode inline
+sudo snort -c /etc/snort/snort.conf -Q -i enp0s9:enp0s10 --daq afpacket --daq-mode inline -A unsock
+
+alternative: -A console
+
+Example snort rule:
+alert icmp $EXTERNAL_NET any -> $EXTERNAL_NET any (msg:”Ping”;sid:232;gid:666;rev:5;)
 
 Starting ryu:
 ryu-manager ryu.app.ofctl_rest
