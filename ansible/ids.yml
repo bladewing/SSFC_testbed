@@ -45,21 +45,17 @@
         dest: wrapper.ini
       # Start wrapper
 
-- name: Setup snort parser
+- name: Setup snort reader
   hosts: sa1
   gather_facts: False
   become: false
 
   tasks:
-  - name: Copy snort helper
-    copy:
-      src: ids/snort.py
-      dest: snort.py
-
-  - name: Copy snort parser
-    copy:
-      src: ids/readsnort.py
-      dest: readsnort.py
-
-  # sudo python3 readsnort.py
-  # start snort
+  - name: clone repo
+    git:
+      repo: git@gitlab2.informatik.uni-wuerzburg.de:descartes/nfv-security/attackreader.git
+      dest: attackreader
+      accept_hostkey: yes
+  - name: build attackreader
+    make:
+      chdir: attackreader
