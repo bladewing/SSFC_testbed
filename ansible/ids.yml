@@ -45,6 +45,14 @@
         dest: wrapper.ini
       # Start wrapper
 
+    - name: install dependencies
+      pip:
+        name:
+          - flask
+          - requests
+          - netifaces
+          - PyJWT
+
 - name: Setup snort reader
   hosts: sa1
   gather_facts: False
