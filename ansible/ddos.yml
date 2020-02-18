@@ -1,0 +1,37 @@
+# vim:ft=yaml
+
+- hosts: sa3
+  gather_facts: False
+  become: true
+
+  pre_tasks:
+    - name: Bootstrap
+      include_tasks: subtasks/bootstrap.yml
+
+  tasks:
+    - name: add influxDB apt repo
+      include_tasks: subtasks/influx_repo.yml
+
+    - name: setup telegraf
+      include_tasks: subtasks/telegraf_setup.yml
+
+    - name: install packages
+      apt:
+        name:
+          - build-essential
+          - libnuma-dev
+
+- name: Setup DPDK
+  hosts: sa3
+  gather_facts: False
+  become: false
+
+  tasks:
+  # wget http://fast.dpdk.org/rel/dpdk-17.11.9.tar.xz
+  # extract
+  # make -j4 install T=x86_64-native-linuxapp-gcc
+  # git clone https://gitlab2.informatik.uni-wuerzburg.de/descartes/nfv-security/DDoS_VNF
+  # sysctl -w vm.nr_hugepages=512
+  # modprobe vfio-pci
+  # bind nic
+  # sudo ./run.sh
