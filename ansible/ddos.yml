@@ -27,11 +27,45 @@
   become: false
 
   tasks:
-  # wget http://fast.dpdk.org/rel/dpdk-17.11.9.tar.xz
-  # extract
-  # make -j4 install T=x86_64-native-linuxapp-gcc
-  # git clone https://gitlab2.informatik.uni-wuerzburg.de/descartes/nfv-security/DDoS_VNF
-  # sysctl -w vm.nr_hugepages=512
+    - name: Download tarball
+      get_url:
+        url: http://fast.dpdk.org/rel/dpdk-17.11.9.tar.xz
+        dest: .
+    - name: Extract tarball
+      unarchive:
+        src: dpdk-17.11.9.tar.xz
+        remote_src: yes
+        dest: .
+    - name: Build
+      make:
+        chdir: dpdk-stable-17.11.9
+        target: install
+        params:
+          T: x86_64-native-linuxapp-gcc
+
+- name: Setup VNF
+  hosts: sa3
+  gather_facts: false
+  become: false
+
+  tasks:
+    - name: Clone VNF
+      git:
+        repo: git@gitlab2.informatik.uni-wuerzburg.de:descartes/nfv-security/DDoS_VNF.git
+        dest: DDoS_VNF
+        accept_hostkey: true
+    - name: Build
+      make:
+        chdir: DDoS_VNF
+      environment:
+        RTE_SDK: /home/vagrant/dpdk-stable-17.11.9
+    - name: Setup hugepages
+      become: true
+      sysctl:
+        name: vm.nr_hugepages
+        value: '512'
+        sysctl_set: yes
+
   # modprobe vfio-pci
   # bind nic
-  # sudo ./run.sh
+  # sudo ./ddos_vnf
