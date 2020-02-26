@@ -30,3 +30,13 @@ client -> IDS -> server
 1 -> 4
 3 -> 9
 9 -> 1
+
+Run ansible:
+
+From ansible/ subfolder:
+
+main playbook, do this first
+ansible-playbook --inventory-file hosts-vagrant playbook.yml
+
+all others:
+ls *.yml | grep -v playbook.yml | xargs -I % ansible-playbook --inventory-file hosts-vagrant %
