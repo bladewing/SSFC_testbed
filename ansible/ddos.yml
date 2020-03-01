@@ -66,6 +66,23 @@
         value: '512'
         sysctl_set: yes
 
-  # modprobe vfio-pci
-  # bind nic
+- name: Bind NIC
+  hosts: sa3
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Bring iface down
+      raw: ip link set enp0s9 down || true
+    - name: Load uio module
+      modprobe:
+        name: uio
+        state: present
+    - name: Load igb_uio module
+      raw: insmod dpdk-stable-17.11.9/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko || true
+    - name: Unbind NIC
+      raw: python3 dpdk-stable-17.11.9/usertools/dpdk-devbind.py -u enp0s9 || true
+    - name: Bind NIC
+      raw: python3 dpdk-stable-17.11.9/usertools/dpdk-devbind.py --bind=igb_uio 0000:00:09.0
+
   # sudo ./ddos_vnf
