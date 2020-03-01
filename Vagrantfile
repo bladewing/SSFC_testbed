@@ -77,6 +77,7 @@ Vagrant.configure("2") do |config|
     sa3.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
       vb.customize ["modifyvm", :id, "--nicpromisc4", "allow-all"]
+      vb.cpus = 4
     end
   end
 
