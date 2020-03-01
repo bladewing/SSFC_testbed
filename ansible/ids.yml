@@ -19,7 +19,9 @@
     - name: install snort
       ignore_errors: true
       apt:
-        name: snort
+        name:
+          - snort
+          - python3-pip
 
     - name: make interfaces promisc
       raw: ip link set "{{ item }}" promisc on
