@@ -15,6 +15,40 @@
     - name: setup telegraf
       include_tasks: subtasks/telegraf_setup.yml
 
-    - name: install apache
+    - name: install packages
       apt:
-        name: apache2
+        name:
+          - apache2
+          - build-essential
+          - python3-pip
+
+    - name: Install python packages
+      pip:
+        name: ryu
+
+- name: Build kernel module
+  become: false
+  gather_facts: false
+  hosts: servers
+
+  tasks:
+    - name: Clone repo
+      git:
+        repo: git@gitlab2.informatik.uni-wuerzburg.de:descartes/nfv-security/THREADS_kernel_module.git
+        dest: THREADS_kernel_module
+        accept_hostkey: true
+    - name: Build module
+      raw: "cd THREADS_kernel_module && make"
+      # sudo insmod threads.ko ip_sdnctl=192.168.201.1
+
+- name: Setup SDN controller
+  become: false
+  gather_facts: false
+  hosts: servers
+
+  tasks:
+    - name: Clone repo
+      git:
+        repo: git@gitlab2.informatik.uni-wuerzburg.de:descartes/nfv-security/DDoS_SDN_controller.git
+        dest: DDoS_SDN_controller
+        accept_hostkey: true
