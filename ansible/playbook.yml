@@ -8,9 +8,6 @@
     - name: Bootstrap
       include_tasks: subtasks/bootstrap.yml
 
-    - name: add influxDB apt repo
-      include_tasks: subtasks/influx_repo.yml
-
 - name: Copy git ssh key
   hosts: all
   become: false
@@ -75,7 +72,7 @@
     - name: copy apt-mirror list
       copy:
         src: subtasks/apt-mirror/mirror.list
-        dest: /etc/apt/mirrors.list
+        dest: /etc/apt/mirror.list
         mode: '0644'
         owner: root
         group: root
@@ -126,14 +123,14 @@
     - name: add new deps
       apt_repository:
         repo: "{{ item }}"
-        state: absent
+        state: present
       with_items:
-        - deb http://192.168.42.2/ubuntu bionic main restricted
-        - deb http://192.168.42.2/ubuntu bionic-security main restricted
-        - deb http://192.168.42.2/ubuntu bionic-updates restricted
-        - deb-src http://192.168.42.2/ubuntu bionic main restricted
-        - deb-src http://192.168.42.2/ubuntu bionic-security main restricted
-        - deb-src http://192.168.42.2/ubuntu bionic-updates restricted
+        - deb http://192.168.206.1/ubuntu bionic main restricted
+        - deb http://192.168.206.1/ubuntu bionic-security main restricted
+        - deb http://192.168.206.1/ubuntu bionic-updates restricted
+        - deb-src http://192.168.206.1/ubuntu bionic main restricted
+        - deb-src http://192.168.206.1/ubuntu bionic-security main restricted
+        - deb-src http://192.168.206.1/ubuntu bionic-updates restricted
 
 - name: setup influxdb, chronograf @ master
   gather_facts: False
@@ -141,6 +138,9 @@
   become: true
 
   tasks:
+    - name: add influxDB apt repo
+      include_tasks: subtasks/influx_repo.yml
+
     - name: install influx server
       apt:
         name:
@@ -154,7 +154,7 @@
         path: /etc/influxdb/influxdb.conf
         section: 'http'
         option: bind-address
-        value: '"192.168.42.2:8086"'
+        value: '"192.168.206.1:8086"'
       register: influx_conf
 
     - name: setup services
@@ -178,5 +178,8 @@
   become: true
 
   tasks:
+    - name: add influxDB apt repo
+      include_tasks: subtasks/influx_repo.yml
+    
     - name: setup telegraf
       include_tasks: subtasks/telegraf_setup.yml
