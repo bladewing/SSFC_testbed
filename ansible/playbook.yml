@@ -26,12 +26,15 @@
   gather_facts: False
   hosts: masters
   become: true
+  vars:
+    dhcp_server: true
 
   tasks:
     - name: install isc-dhcp-server
       apt:
         name: isc-dhcp-server
         state: present
+      when: dhcp_server
 
     - name: copy dhcp-config
       copy:
@@ -40,6 +43,7 @@
         mode: '0644'
         owner: root
         group: root
+      when: dhcp_server
 
     - name: copy dhcp-defaults
       copy:
@@ -48,16 +52,20 @@
         mode: '0644'
         owner: root
         group: root
+      when: dhcp_server
 
     - name: start dhcp server
       service:
         name: isc-dhcp-server
         state: restarted
         enabled: yes
+      when: dhcp_server
 
 - name: setup apt-server
   gather_facts: False
   hosts: masters
+  vars:
+    apt_server: false
   become: true
 
   tasks:
@@ -68,6 +76,7 @@
           - apache2
         state: present
         update_cache: yes
+      when: apt_server
 
     - name: copy apt-mirror list
       copy:
@@ -76,9 +85,11 @@
         mode: '0644'
         owner: root
         group: root
+      when: apt_server
 
     - name: sync apt-mirror
       shell: apt-mirror
+      when: apt_server
 
     - name: symbolic link for ubuntu
       file:
@@ -87,6 +98,7 @@
         owner: www-data
         group: www-data
         state: link
+      when: apt_server
 
     - name: symbolic link for influx
       file:
@@ -95,17 +107,21 @@
         owner: www-data
         group: www-data
         state: link
+      when: apt_server
 
     - name: run apache
       service:
         name: apache2
         state: started
         enabled: yes
+      when: apt_server
 
 - name: setup apt-clients
   gather_facts: False
   hosts: all
   become: true
+  vars:
+    apt_server: false
 
   tasks:
     - name: remove default debs
@@ -119,6 +135,7 @@
         - deb-src http://de.archive.ubuntu.com/ubuntu bionic main restricted
         - deb-src http://de.archive.ubuntu.com/ubuntu bionic-security main restricted
         - deb-src http://de.archive.ubuntu.com/ubuntu bionic-updates restricted
+      when: apt_server
 
     - name: add new deps
       apt_repository:
@@ -131,6 +148,7 @@
         - deb-src http://192.168.206.1/ubuntu bionic main restricted
         - deb-src http://192.168.206.1/ubuntu bionic-security main restricted
         - deb-src http://192.168.206.1/ubuntu bionic-updates restricted
+      when: apt_server
 
 - name: setup influxdb, chronograf @ master
   gather_facts: False
