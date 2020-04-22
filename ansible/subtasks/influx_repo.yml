@@ -4,7 +4,7 @@
 - name: add influx apt repository
   apt_repository:
     #repo: 'deb http://192.168.206.1/influx/ bionic stable'
-    repo='deb https://repos.influxdata.com/ubuntu trusty stable' state=present
+    repo: 'deb https://repos.influxdata.com/ubuntu trusty stable'
     state: present
     filename: influx
     update_cache: yes
