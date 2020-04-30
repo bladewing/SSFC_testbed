@@ -59,3 +59,35 @@
           - flask
           - PyJWT
           - numpy
+
+    # todo only jar
+    - name: create directory l7sdntest jar
+      file:
+        path: /home/vagrant/l7sdntest
+        state: directory
+
+    - name: create directory l7sdntest bin
+      file:
+        path: /home/vagrant/l7sdntestBin
+        state: directory
+
+    - name: copy l7sdntest.jar
+      copy:
+        src: subtasks/l7sdntest/l7sdntest.jar
+        dest: /home/vagrant/l7sdntest
+        mode: '0777'
+
+    #- name: copy l7sdntest bin
+      #copy:
+        #src: subtasks/l7sdntest/bin
+        #dest: /home/vagrant/l7sdntestBin
+        #mode: '0777'
+
+    - name: copyl7sdntest Configuration XML file
+      copy:
+        src: subtasks/l7sdntest/aTest
+        dest: /home/vagrant/l7sdntest
+        mode: '0777'
+
+
+
