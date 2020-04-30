@@ -10,7 +10,7 @@ Run vagrant:
 
 Run ansible:
 From ids-bypass-instantiation/ansible:
-!! dont do a vagrant reload
+!! dont do a vagrant reload (timeout!)
     main playbook, do this first:
     ansible-playbook --inventory-file hosts-vagrant playbook.yml
 
