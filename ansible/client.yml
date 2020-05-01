@@ -14,3 +14,38 @@
 
     - name: setup telegraf
       include_tasks: subtasks/telegraf_setup.yml
+
+# todo client host
+- name: Setup l7sdntest
+  become: true
+  hosts: clientHost
+
+  tasks:
+
+    - name: Update Apt Cache
+      become: true
+      apt:
+        update_cache: yes
+
+    - name: Install OpenJDK Java Java 11
+      become: yes
+      apt:
+        name: openjdk-11-jdk
+        state: present
+
+    - name: create directory l7sdntest jar
+      file:
+        path: /home/vagrant/l7sdntest
+        state: directory
+
+        #- name: create directory l7sdntest bin
+        #file:
+        #path: /home/vagrant/l7sdntestBin
+        #state: directory
+
+    - name: copy l7sdntest.jar
+      copy:
+        src: subtasks/l7sdntest/l7sdntest.jar
+        dest: /home/vagrant/l7sdntest
+        mode: '0777'
+

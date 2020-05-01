@@ -60,7 +60,6 @@
       apt:
         name:
           - python3-pip
-          - yum
 
     - name: install ryu
       pip:
@@ -83,16 +82,16 @@
       with_items:
         openjdk-11-jdk
 
-    # todo only jar
+    # todo only jar in roles auslagern
     - name: create directory l7sdntest jar
       file:
         path: /home/vagrant/l7sdntest
         state: directory
 
-    - name: create directory l7sdntest bin
-      file:
-        path: /home/vagrant/l7sdntestBin
-        state: directory
+    #- name: create directory l7sdntest bin
+      #file:
+        #path: /home/vagrant/l7sdntestBin
+        #state: directory
 
     - name: copy l7sdntest.jar
       copy:

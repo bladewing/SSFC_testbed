@@ -59,16 +59,30 @@ curl -X GET http://192.168.206.1:8080/stats/switches (from anywhere else)
 
 
 ##ClientHost
+Send attack to IDS (For Testing Purposes):
+```sh
+nmap **ip to ids** (here: 192.168.203.1)
+```
 
 
 
 
 ##ids/sa1
 ####Snort:
+Snort Configuration:
+```sh
+/etc/snort/snort.conf
+```
+
+Test Snort Rules:
+```sh
+sudo snort -T -c /etc/snort/snort.conf -i enp0s9
+```
+
 Start snort: 
 ```sh
 sudo snort -c /etc/snort/snort.conf -Q -i enp0s9:enp0s10 --daq afpacket --daq-mode inline -A unsock
-alternative: sudo snort A console
+alternative: sudo snort -A console -q -u snort -g snort -c /etc/snort/snort.conf -i enp0s9
 ```
 
 Example snort rule: 
