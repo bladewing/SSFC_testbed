@@ -5,16 +5,6 @@
 	<title>aTest</title>
 	<time type="fixed" limit="20" />
 	<repetition number="1" interval_min_wait="1500" wait_for_clients="true" />
-	<snmp_tracking>
-		<active>true</active>
-		<interval>1000</interval>
-		<version>2c</version>
-		<ignore_beginning>5</ignore_beginning>
-		<oid_values>
-			<oid value="1.3.6.1.2.1.2.2.1.10.ports" />
-			<oid value="1.3.6.1.2.1.2.2.1.16.ports" />
-		</oid_values>
-	</snmp_tracking>
 	<hardware>
 		<server daemon="client"     id="1" daemon_ip="192.168.202.1" experiment_ip="10.10.1.3" />
 		<server daemon="server"     id="2" daemon_ip="10.1.3.12" experiment_ip="10.10.1.2" />
