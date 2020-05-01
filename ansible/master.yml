@@ -70,63 +70,18 @@
           - PyJWT
           - numpy
 
-
-
-    - name: Update
+    - name: Update Apt Cache
       become: true
       apt:
         update_cache: yes
 
-    - name: Install OpenJDK Java
+    - name: Install OpenJDK Java Java 11
       become: yes
       apt:
         name: "{{ item }}"
         state: present
       with_items:
         openjdk-11-jdk
-
-    #- name: Java | Oracle download
-      #copy:
-        #src: "{{ java_rpm }}"
-        #dest: /tmp/{{ java_rpm }}
-        # mode: 0777
-
-    #- name: Java | Oracle install
-      #yum:
-        #name: /home/vagrant/tmp/{{ java_rpm }}
-        #state: latest
-        #update_cache: yes
-
-    #- name: javaetrur
-      #roles:
-        #- java
-      #vars:
-        #- java_rpm_install: true
-        #- java_rpm: jdk-14.0.1-linux-x64_bin.rpm
-
-    #- name: add latest java ppa repo
-      #apt_repository: repo='ppa:linuxuprising/java'
-
-    #- debconf:
-        #name: oracle-java14-installer
-        #question: shared/accepted-oracle-license-v1-1
-        #value: true
-        #vtype: select
-
-    #- name: Install Oracle Java xx
-      #command: sudo apt -y install oracle-java14-installer
-
-    #- name: Set default
-      #command: sudo apt -y install oracle-java14-set-default
-
-    #- name: sdfhdfshsdfhs
-      #apt:
-        #name: "{{ item }}"
-        #state: present
-        #update_cache: yes
-      #with_items:
-        #- oracle-java14-installer
-        #- oracle-java14-set-default
 
     # todo only jar
     - name: create directory l7sdntest jar

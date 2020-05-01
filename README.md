@@ -37,13 +37,13 @@ ansible-playbook --inventory-file hosts-vagrant **host**.yml
 
 
 ##Master
-#####Run l7sdntest
+####Run l7sdntest
 From /home/vagrant/l7sdntest:
 ```sh
 sudo java -jar l7sdntest.jar expcontr **ConfigurationFile (same dir)**
 ```
 
-#####ryu
+####ryu
 Starting ryu:
 ```sh
 ryu-manager ryu.app.ofctl_rest
@@ -64,7 +64,7 @@ curl -X GET http://192.168.206.1:8080/stats/switches (from anywhere else)
 
 
 ##ids/sa1
-#####Snort:
+####Snort:
 Start snort: 
 ```sh
 sudo snort -c /etc/snort/snort.conf -Q -i enp0s9:enp0s10 --daq afpacket --daq-mode inline -A unsock
@@ -85,7 +85,7 @@ curl -d '{"rate":"1", "misc":""}' -H "Content-Type: application/json" -X POST lo
 
 
 ##fw/sa2
-#####firewall
+####firewall
 Example firewall rule:
 ```sh
 sudo iptables -A FORWARD -p icmp -j DROP
@@ -105,7 +105,7 @@ sudo iptables -A FORWARD -p icmp -j DROP
 
 
 ##switch
-#####Flows
+####Flows
 Add a flow from X to Y:
 ```sh
 sudo ovs-ofctl add-flow br0 in_port=X,actions=Y
