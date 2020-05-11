@@ -49,7 +49,7 @@ Starting ryu:
 ryu-manager ryu.app.ofctl_rest
 ```
 
-Get the List of all Switches connected to the Controller: 
+Get the List of all Switches connected to the Ryu-Controller: 
 ```sh
 curl -X GET http://localhost:8080/stats/switches (from master)
 curl -X GET http://192.168.206.1:8080/stats/switches (from anywhere else)
@@ -78,6 +78,11 @@ Test Snort Rules:
 ```sh
 sudo snort -T -c /etc/snort/snort.conf -i enp0s9
 ```
+
+Modify the HOME_NET Variable to reduce false-positive alerts:
+```sh
+/etc/snort/snort.conf ipvar HOME_NET
+```                                    
 
 Start snort: 
 ```sh

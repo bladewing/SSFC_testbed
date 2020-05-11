@@ -54,6 +54,11 @@
         name: python3-pip
         state: present
 
+    - name: Install pip2
+      apt:
+        name: python-pip
+        state: present
+
     - name: install pip packages
       pip:
         name:
@@ -103,3 +108,105 @@
         state: present
 
     # sudo ruby firewall.rb
+
+# todo in roles just for testing in fw
+- name: Setup l7sdntest
+  become: true
+  hosts: sa2
+
+  tasks:
+    - name: Update Apt Cache
+      become: true
+      apt:
+        update_cache: yes
+
+    - name: Install OpenJDK Java Java 11
+      become: yes
+      apt:
+        name: openjdk-11-jdk
+        state: present
+
+    - name: create directory l7sdntest jar
+      file:
+        path: /home/vagrant/l7sdntestJar
+        state: directory
+
+        #- name: create directory l7sdntest bin
+        #file:
+        #path: /home/vagrant/l7sdntestBin
+        #state: directory
+
+    - name: copy l7sdntest.jar
+      copy:
+        src: subtasks/l7sdntest/l7sdntest.jar
+        dest: /home/vagrant/l7sdntestJar
+        mode: '0777'
+
+- name: Setup l7Sdntest Git Repo
+  hosts: sa2
+  gather_facts: False
+  become: false
+
+  tasks:
+    - name: clone repo
+      git:
+        repo: git@gitlab2.informatik.uni-wuerzburg.de:descartes/nfv-security/l7sdntest.git
+        dest: l7sdntest
+        accept_hostkey: yes
+
+# todo on seperate server , just for testing purposes
+- name: Setup MySQL for ComApp
+  become: true
+  hosts: sa2
+
+  tasks:
+    - name: Update Apt Cache
+      become: true
+      apt:
+        update_cache: yes
+
+    - name: bugfix
+      become: yes
+      apt:
+        name: libmysqlclient-dev
+        state: present
+
+    - name: install mysql
+      become: yes
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: install MySQL-python for modifications
+      pip:
+        name:
+          - MySQL-python
+
+    - name: Create database user with name 'l7sdntestuser' and password 'root' with all database privileges
+      mysql_user:
+        name: l7sdntestuser
+        password: root
+        priv: '*.*:ALL' #all priviliges to the l7sdntestuser (issues with l7sdntest)
+        state: present
+
+    - name: Create a new database with name 'l7sdntest'
+      mysql_db:
+        name: l7sdntest
+        state: present
+
+    - name: create directory mysqlFiles
+      file:
+        path: /home/vagrant/mysqlFiles
+        state: directory
+
+    - name: copy mysql configuration
+      copy:
+        src: subtasks/mysql/controller_db_dumb.sql
+        dest: /home/vagrant/mysqlFiles
+        mode: '0777'
+
+    - name: Create Tables
+      mysql_db:
+        name: l7sdntest
+        state: import
+        target: /home/vagrant/mysqlFiles/controller_db_dumb.sql
