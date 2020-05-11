@@ -210,3 +210,17 @@
         name: l7sdntest
         state: import
         target: /home/vagrant/mysqlFiles/controller_db_dumb.sql
+
+# todo on seperate comapp server
+- name: Setup Ryu
+  become: true
+  hosts: sa2
+  tasks:
+
+    - name: install ryu
+      pip:
+        name:
+          - ryu
+          - flask
+          - PyJWT
+          - numpy

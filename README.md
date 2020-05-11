@@ -36,14 +36,14 @@ ansible-playbook --inventory-file hosts-vagrant **host**.yml
 
 
 
-##Master
-####Run l7sdntest
+## Master
+#### Run l7sdntest
 From /home/vagrant/l7sdntest:
 ```sh
 sudo java -jar l7sdntest.jar expcontr **ConfigurationFile (same dir)**
 ```
 
-####ryu
+#### ryu
 Starting ryu:
 ```sh
 ryu-manager ryu.app.ofctl_rest
@@ -58,7 +58,7 @@ curl -X GET http://192.168.206.1:8080/stats/switches (from anywhere else)
 
 
 
-##ClientHost
+## ClientHost
 Send attack to IDS (For Testing Purposes):
 ```sh
 nmap **ip to ids** (here: 192.168.203.1)
@@ -67,8 +67,8 @@ nmap **ip to ids** (here: 192.168.203.1)
 
 
 
-##ids/sa1
-####Snort:
+## ids/sa1
+#### Snort:
 Snort Configuration:
 ```sh
 /etc/snort/snort.conf
@@ -103,8 +103,8 @@ curl -d '{"rate":"1", "misc":""}' -H "Content-Type: application/json" -X POST lo
 
 
 
-##fw/sa2
-####firewall
+## fw/sa2
+#### firewall
 Example firewall rule:
 ```sh
 sudo iptables -A FORWARD -p icmp -j DROP
@@ -113,18 +113,18 @@ sudo iptables -A FORWARD -p icmp -j DROP
 
 
 
-##ddos/sa3
+## ddos/sa3
 
 
 
 
-##server
+## server
 
 
 
 
-##switch
-####Flows
+## switch
+#### Flows
 Add a flow from X to Y:
 ```sh
 sudo ovs-ofctl add-flow br0 in_port=X,actions=Y
