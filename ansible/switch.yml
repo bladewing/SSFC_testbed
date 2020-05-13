@@ -46,6 +46,7 @@
 
     - name: bringing interfaces up
       raw: ip link set "{{ item }}" up
+      become: true
       with_items:
         - enp0s9
         - enp0s10

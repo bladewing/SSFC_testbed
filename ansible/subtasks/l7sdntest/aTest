@@ -13,7 +13,8 @@
 	</hardware>
 	<ressources>
 		<files>
-			<file id="1" name="Testfile" size="50" />
+			<file id="1" name="Testfile" size="2097152" />
+			<file id="1111" name="contextAdmin/contextAdmin.html" size="2097152"/>
 		</files>
 	</ressources>
 	<config>
@@ -22,10 +23,10 @@
 				<quantity>1</quantity>
 				<!-- spread on hardware servers? -->
 				<load>trueload</load>
-				<load_interval>2500</load_interval> <!-- interval in milliseconds -->
-				<max_connections>-1</max_connections>
+				<load_interval>2500</load_interval> <!-- interval in milliseconds um last an comApp zu melden-->
+				<max_connections>2</max_connections>
 				<!-- Connection-reservation for premium? -->
-				<first_port>29000</first_port>
+				<first_port>30000</first_port>
 				<ressource_type>file</ressource_type>
 				<ressources>
 					<ressource id="1" />
@@ -34,7 +35,7 @@
 		</servers>
 		<clients>
 			<instance hardware="1">
-				<quantity>30</quantity>
+				<quantity>2</quantity>
 				<!-- spread on hardware servers? -->
 				<repeat>-1</repeat>
 				<interval>5000</interval>
@@ -44,7 +45,7 @@
 				<inform_controller_delay>5</inform_controller_delay> <!-- delay in milliseconds -->
 				<action>
 					<type>file</type>
-					<server id="2" port="29000" />
+					<server id="2" port="30000" />
 					<files>
 						<file id="1" />
 					</files>
