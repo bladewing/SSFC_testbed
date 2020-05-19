@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--<!DOCTYPE experiment SYSTEM "src/Config/Config.dtd">-->
+
+<experiment config_version="1.0">
+	<title>aTest</title>
+	<time type="fixed" limit="20" />
+	<repetition number="1" interval_min_wait="1500" wait_for_clients="true" />
+	<hardware>
+		<server daemon="client"     id="1" daemon_ip="192.168.202.1" experiment_ip="192.168.202.1" />
+		<server daemon="server"     id="2" daemon_ip="192.168.201.1" experiment_ip="192.168.201.1" />
+		<server daemon="controller" id="3" daemon_ip="192.168.204.1" experiment_ip="192.168.204.1" />
+		<switch id="4" config_ip="192.168.207.1" experiment_ip="192.168.204.1"/>
+	</hardware>
+	<ressources>
+		<files>
+			<file id="1" name="Testfile" size="2097152" />
+			<file id="1111" name="contextAdmin/contextAdmin.html" size="2097152"/>
+		</files>
+	</ressources>
+	<config>
+		<servers>
+			<instance hardware="2">
+				<quantity>1</quantity>
+				<!-- spread on hardware servers? -->
+				<load>trueload</load>
+				<load_interval>2500</load_interval> <!-- interval in milliseconds um last an comApp zu melden-->
+				<max_connections>2</max_connections>
+				<!-- Connection-reservation for premium? -->
+				<first_port>30000</first_port>
+				<ressource_type>file</ressource_type>
+				<ressources>
+					<ressource id="1" />
+				</ressources>
+			</instance>
+		</servers>
+		<clients>
+			<instance hardware="1">
+				<quantity>2</quantity>
+				<!-- spread on hardware servers? -->
+				<repeat>-1</repeat>
+				<interval>5000</interval>
+				<interval_type>fixed</interval_type>
+				<priority>0</priority>
+				<inform_controller>false</inform_controller>
+				<inform_controller_delay>5</inform_controller_delay> <!-- delay in milliseconds -->
+				<action>
+					<type>file</type>
+					<server id="2" port="30000" />
+					<files>
+						<file id="1" />
+					</files>
+				</action>
+			</instance>
+		</clients>
+		<controller port="8080">
+			<reset>true</reset>
+		</controller>
+	</config>
+</experiment>

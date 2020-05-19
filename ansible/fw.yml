@@ -128,31 +128,15 @@
 
     - name: create directory l7sdntest jar
       file:
-        path: /home/vagrant/l7sdntestJar
+        path: /home/vagrant/l7sdntest
         state: directory
-
-        #- name: create directory l7sdntest bin
-        #file:
-        #path: /home/vagrant/l7sdntestBin
-        #state: directory
 
     - name: copy l7sdntest.jar
       copy:
         src: subtasks/l7sdntest/l7sdntest.jar
-        dest: /home/vagrant/l7sdntestJar
+        dest: /home/vagrant/l7sdntest
         mode: '0777'
 
-- name: Setup l7Sdntest Git Repo
-  hosts: sa2
-  gather_facts: False
-  become: false
-
-  tasks:
-    - name: clone repo
-      git:
-        repo: git@gitlab2.informatik.uni-wuerzburg.de:descartes/nfv-security/l7sdntest.git
-        dest: l7sdntest
-        accept_hostkey: yes
 
 # todo on seperate server , just for testing purposes
 - name: Setup MySQL for ComApp
@@ -212,9 +196,10 @@
         target: /home/vagrant/mysqlFiles/controller_db_dumb.sql
 
 # todo on seperate comapp server
-- name: Setup Ryu
+- name: Setup Ryu SDN Controllers
   become: true
   hosts: sa2
+  gather_facts: false
   tasks:
 
     - name: install ryu
@@ -224,3 +209,34 @@
           - flask
           - PyJWT
           - numpy
+
+    - name: Create Directory ryu
+      file:
+        path: /home/vagrant/ryu
+        state: directory
+
+    - name: Copy Ryu Controller Files
+      copy:
+        src: subtasks/l7sdntest/comapp/l7sdntest_easy_lb.py
+        dest: /home/vagrant/ryu
+        mode: 777
+
+    - name: Copy All other Controller Files
+      copy:
+        src: subtasks/l7sdntest/comapp/master_blacklisting.py
+        dest: /home/vagrant/ryu
+        mode: 777
+
+    - name: install sqlite
+      become: yes
+      apt:
+        name: sqlite3
+        state: present
+
+    - name: Copy all SDN Controller Files Ryu
+      copy: src=subtasks/l7sdntest/comapp/{{ item }} dest=/home/vagrant/ryu
+      with_items:
+        - l7sdntest_easy_lb.py
+        - l7sdntest_easy_nothing.py
+
+

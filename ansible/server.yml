@@ -53,7 +53,7 @@
         dest: DDoS_SDN_controller
         accept_hostkey: true
 
-# todo in roles
+# todo in roles siehe Master "Musterbeispiel"
 - name: Setup l7sdntest
   become: true
   hosts: servers
@@ -74,11 +74,6 @@
       file:
         path: /home/vagrant/l7sdntest
         state: directory
-
-        #- name: create directory l7sdntest bin
-        #file:
-        #path: /home/vagrant/l7sdntestBin
-        #state: directory
 
     - name: copy l7sdntest.jar
       copy:
