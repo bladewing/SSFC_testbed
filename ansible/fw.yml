@@ -195,6 +195,9 @@
         state: import
         target: /home/vagrant/mysqlFiles/controller_db_dumb.sql
 
+    - name: Update, Upgrade, Reboot FW
+      include_tasks: subtasks/update.yml
+
 # todo on seperate comapp server
 - name: Setup Ryu SDN Controllers
   become: true
@@ -215,18 +218,6 @@
         path: /home/vagrant/ryu
         state: directory
 
-    - name: Copy Ryu Controller Files
-      copy:
-        src: subtasks/l7sdntest/comapp/l7sdntest_easy_lb.py
-        dest: /home/vagrant/ryu
-        mode: 777
-
-    - name: Copy All other Controller Files
-      copy:
-        src: subtasks/l7sdntest/comapp/master_blacklisting.py
-        dest: /home/vagrant/ryu
-        mode: 777
-
     - name: install sqlite
       become: yes
       apt:
@@ -238,5 +229,9 @@
       with_items:
         - l7sdntest_easy_lb.py
         - l7sdntest_easy_nothing.py
+        - l7sdntest_lb_mysql.py
+        - master_blacklisting.py
+        - master_whitelisting.py
+        - PiotrNo3.py
 
 

@@ -1,0 +1,20 @@
+- name: Update apt repo and cache on Host
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=3600 # update the cache if its older than 3600s
+  # force apt_get is to ensure not using the aptitude command
+
+- name: upgrade all packages on Host
+  apt: upgrade=dist force_apt_get=yes #upgrade=dist = equivalent of apt-get upgrade
+
+- name: check if reboot is needed on Host
+  register: reboot_required_file
+  stat: path=/var/run/reboot-required get_md5=no # get_md5 = algo to determine checksum of the file, other available
+
+- name: reboot the box if necessary (Reboot file registered in the previous task)
+  reboot:
+    msg: "Reboot initiated by Ansible"
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: uptime
+  when: reboot_required_file.stat.exists

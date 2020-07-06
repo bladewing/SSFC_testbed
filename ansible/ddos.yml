@@ -85,4 +85,7 @@
     - name: Bind NIC
       raw: python3 dpdk-stable-17.11.9/usertools/dpdk-devbind.py --bind=igb_uio 0000:00:09.0
 
+    - name: Update, Upgrade, Reboot DDos
+      include_tasks: subtasks/update.yml
+
   # sudo ./ddos_vnf

@@ -69,10 +69,8 @@
           - PyJWT
           - numpy
 
-    - name: Update Apt Cache
-      become: true
-      apt:
-        update_cache: yes
+    - name: Update, Upgrade, Reboot Master
+      include_tasks: subtasks/update.yml
 
 
 # todo task "Setup l7sdntest" in roles oder mit playbook auslagern (nur diese)
@@ -115,3 +113,6 @@
       with_items:
         - Jonathan_MA_easy
         - aTest
+        - Master_3_black
+        - Master_2
+

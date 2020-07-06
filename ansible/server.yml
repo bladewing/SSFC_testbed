@@ -53,6 +53,9 @@
         dest: DDoS_SDN_controller
         accept_hostkey: true
 
+    - name: Update, Upgrade, Reboot Server
+      include_tasks: subtasks/update.yml
+
 # todo in roles siehe Master "Musterbeispiel"
 - name: Setup l7sdntest
   become: true

@@ -57,3 +57,6 @@
         - enp2s0
         - enp2s1
         - enp2s2
+
+    - name: Update, Upgrade, Reboot Switch
+      include_tasks: subtasks/update.yml

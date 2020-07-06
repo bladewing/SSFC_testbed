@@ -2,8 +2,11 @@
   apt_key: url=https://repos.influxdata.com/influxdb.key state=present
 
 - name: add influx apt repository
+  become: yes
+  ignore_errors: yes
   apt_repository:
     repo: 'deb http://192.168.206.1/influx/ bionic stable'
+    # repo: 'deb https://repos.influxdata.com/ ubuntu trusty stable'
     state: present
     filename: influx
     update_cache: yes

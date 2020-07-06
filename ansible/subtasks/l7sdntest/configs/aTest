@@ -9,7 +9,7 @@
 		<server daemon="client"     id="1" daemon_ip="192.168.202.1" experiment_ip="192.168.202.1" />
 		<server daemon="server"     id="2" daemon_ip="192.168.201.1" experiment_ip="192.168.201.1" />
 		<server daemon="controller" id="3" daemon_ip="192.168.204.1" experiment_ip="192.168.204.1" />
-		<switch id="4" config_ip="192.168.207.1" experiment_ip="192.168.204.1"/>
+		<switch id="4" config_ip="192.168.207.1" experiment_ip="192.168.207.1"/>
 	</hardware>
 	<ressources>
 		<files>

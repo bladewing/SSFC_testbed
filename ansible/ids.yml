@@ -69,3 +69,6 @@
   - name: build attackreader
     make:
       chdir: attackreader
+
+  - name: Update, Upgrade, Reboot ids
+    include_tasks: subtasks/update.yml
