@@ -125,6 +125,25 @@ sudo iptables -A FORWARD -p icmp -j DROP
 
 ## switch
 #### Flows
+From ryu_l7sdntest prject:<br>
+Run Layer2 Switch: 
+````shell script
+ryu-manager simple_switch_13.py
+````
+
+Connect openvswitch to the Ryu Controller:<br> 
+(if the ryu controller runs on the same Host):
+````shell script
+ovs-vsctl set-controller br0 tcp:127.0.0.1:**portNr from Controller**
+````
+
+Test the Connection between OpenvSwitch and the Ryu-Controller:
+````shell script
+ovs-vsctl show
+````
+If the Connection is successfull, it will print "is_connected: true" for every Bridge
+
+
 Add a flow from X to Y:
 ```sh
 sudo ovs-ofctl add-flow br0 in_port=X,actions=Y
